@@ -32,26 +32,21 @@ let unsortedArray = [789, 5, 2, 15, 3, 6, 4];
 
 function mergeTwoSorted(arr1, arr2) {
   let merged = [];
-  const copy1 = arr1;
-  const copy2 = arr2;
 
-  while (copy1.length >= 0) {
-    if(copy1[0] <= copy2[0]) {
-      merged.push(copy1.shift());
-    } else if(copy2[0] < copy1[0]) {
-      merged.push(copy2.shift());
-    } else if(copy2.length === 0 && copy1.length > 0) {
-      merged = [...merged, ...copy1];
-      break;
-    } else if(copy1.length === 0 && copy2.length > 0) {
-      merged = [...merged, ...copy2];
-      break;
-    } else if(copy1.length === 0 && copy2.length === 0) {
-      break;
+  let leftIndex = 0;
+  let rightIndex = 0;
+
+  while (leftIndex < arr1.length && rightIndex < arr2.length) {
+    if (arr1[leftIndex] < arr2[rightIndex]) {
+      merged.push(arr1[leftIndex]);
+      leftIndex++;
+    } else {
+      merged.push(arr2[rightIndex]);
+      rightIndex++;
     }
   }
 
-  return merged;
+  return merged.concat(arr1.slice(leftIndex), arr2.slice(rightIndex));
 }
 
 function mergeSort(arr) {
